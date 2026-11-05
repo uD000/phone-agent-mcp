@@ -1,0 +1,105 @@
+{
+  "name": "whatsapp_send_to_contact",
+  "description": "Send a WhatsApp message to someone saved on the phone, by the name the human gave (no number needed): opens WhatsApp (Personal or Business: it asks when both are installed), searches for the name, opens the chat when exactly one entry matches, otherwise stops and asks the human to choose among the names WhatsApp shows (also for typos and for two chats with the same name). It checks a real chat is open and the header shows the name, pastes the message exactly, then taps Send. The Send tap needs the human's approval.",
+  "platforms": [
+    "ios"
+  ],
+  "params": {
+    "contact": {
+      "description": "The name as the human said it. Typos are fine: the run goes back to the human with WhatsApp's own look-alikes."
+    },
+    "text": {
+      "description": "The exact message to send"
+    },
+    "app": {
+      "description": "personal or business. If both WhatsApps are installed and this is not given, the run stops with status needs_choice: ask the human which one.",
+      "default": "auto"
+    },
+    "pick": {
+      "description": "The human's choice when the run stopped with needs_choice, exactly as listed (for example 'Alex (You)').",
+      "default": ""
+    }
+  },
+  "steps": [
+    {
+      "do": "whatsapp_launch",
+      "app": "{app}"
+    },
+    {
+      "do": "wait_text",
+      "any": [
+        "Chats",
+        "Updates",
+        "Calls",
+        "Communities"
+      ],
+      "timeout": 15
+    },
+    {
+      "do": "tap_text",
+      "text": "Search",
+      "min_y": 0.08,
+      "max_y": 0.45,
+      "timeout": 6,
+      "why": "open the chat list search field"
+    },
+    {
+      "do": "find_chat",
+      "contact": "{contact}",
+      "pick": "{pick}",
+      "why": "search WhatsApp and open the right chat (or ask the human)"
+    },
+    {
+      "do": "wait_absent",
+      "any": [
+        "Chats"
+      ],
+      "exact": true,
+      "min_y": 0.12,
+      "max_y": 0.45,
+      "timeout": 8,
+      "why": "the search results are gone: a chat is open"
+    },
+    {
+      "do": "wait_absent",
+      "any": [
+        "Invite to WhatsApp"
+      ],
+      "timeout": 2,
+      "why": "not on the search results"
+    },
+    {
+      "do": "assert_header",
+      "why": "the chat header must show the name of the entry that was opened"
+    },
+    {
+      "do": "tap_xy",
+      "x": 0.35,
+      "y": 0.925,
+      "why": "focus the message box"
+    },
+    {
+      "do": "paste",
+      "text": "{text}"
+    },
+    {
+      "do": "wait_text",
+      "text": "{text}",
+      "fuzzy": true,
+      "min_y": 0.3,
+      "timeout": 6,
+      "why": "the draft must be on screen"
+    },
+    {
+      "do": "tap_beside_text",
+      "text": "{text}",
+      "x": 0.93,
+      "outward": true,
+      "why": "tap Send for this message to {contact} in WhatsApp ({app})"
+    },
+    {
+      "do": "wait_change",
+      "timeout": 4
+    }
+  ]
+}

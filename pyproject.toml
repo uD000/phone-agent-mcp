@@ -1,0 +1,19 @@
+[project]
+name = "phone-agent"
+version = "0.1.0"
+description = "Let AI agents see and operate a real iPhone over USB or Wi-Fi: local MCP server, daemon and console"
+requires-python = ">=3.11"
+dependencies = ["pymobiledevice3>=11.49,<12", "mcp>=2", "Pillow>=11"]
+
+[project.scripts]
+phone-agent = "phoneagent.cli:entry"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+phoneagent = ["skills/bundled/*.json"]

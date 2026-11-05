@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>CFBundleIdentifier</key><string>local.phone-agent.contacts</string>
+<key>NSContactsUsageDescription</key><string>phone-agent reads your contact names and numbers (read-only) so an AI agent can pick the right recipient and ask you when a name does not match exactly.</string>
+</dict></plist>

@@ -1,0 +1,4 @@
+#!/bin/sh
+D="${PHONE_AGENT_HOME:-$HOME/.phone-agent}"
+rm -f "$D/KILL"
+echo "phone-agent resumed (kill switch off)."

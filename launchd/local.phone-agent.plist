@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Optional: start the phone-agent daemon at login. Replace __REPO__ with the absolute path of this repository, then:
+       cp this file to ~/Library/LaunchAgents/local.phone-agent.plist
+       launchctl load ~/Library/LaunchAgents/local.phone-agent.plist -->
+<plist version="1.0"><dict>
+  <key>Label</key><string>local.phone-agent</string>
+  <key>ProgramArguments</key><array>
+    <string>__REPO__/venv/bin/python</string><string>-m</string><string>phoneagent.daemon</string></array>
+  <key>RunAtLoad</key><true/><key>KeepAlive</key><true/>
+  <key>StandardErrorPath</key><string>/tmp/phone-agent.err</string>
+</dict></plist>

@@ -1,0 +1,82 @@
+{
+  "name": "whatsapp_send",
+  "description": "Send a WhatsApp message to a phone number. Opens the chat with the text prefilled through a deep link in the chosen WhatsApp (Personal or Business; it asks when both are installed), confirms the recipient's number and the draft are on screen, then taps Send. The Send tap is an outward step: it only runs with approved=true.",
+  "params": {
+    "phone": {
+      "description": "Recipient number with country code, digits only (for example 971501234567)"
+    },
+    "text": {
+      "description": "The exact message to send"
+    },
+    "contact": {
+      "description": "Optional but recommended: the contact name exactly as saved. If given, the chat header must show it or the run stops before Send.",
+      "default": ""
+    },
+    "app": {
+      "description": "personal or business. If both WhatsApps are installed and this is not given, the run stops with status needs_choice: ask the human which one.",
+      "default": "auto"
+    }
+  },
+  "steps": [
+    {
+      "do": "whatsapp_open",
+      "phone": "{phone|digits}",
+      "text": "{text|urlencode}",
+      "app": "{app}"
+    },
+    {
+      "do": "wait_text",
+      "text": "{text}",
+      "fuzzy": true,
+      "timeout": 12
+    },
+    {
+      "do": "tap_text",
+      "text": "Message",
+      "exact": true,
+      "optional": true,
+      "why": "WhatsApp may show a chooser sheet first"
+    },
+    {
+      "do": "wait_text",
+      "text": "{text}",
+      "fuzzy": true,
+      "timeout": 8
+    },
+    {
+      "do": "assert_text",
+      "any": [
+        "invalid",
+        "not on WhatsApp",
+        "isn't on WhatsApp",
+        "not valid"
+      ],
+      "absent": true
+    },
+    {
+      "do": "assert_text",
+      "digits": "{phone}",
+      "why": "the chat header must show this number"
+    },
+    {
+      "do": "assert_text",
+      "text": "{contact}",
+      "when": "{contact}",
+      "why": "the chat header must show this saved contact name"
+    },
+    {
+      "do": "tap_xy",
+      "x": 0.93,
+      "y": 0.923,
+      "outward": true,
+      "why": "the green Send button (calibrated on iPhone 16 Pro, WhatsApp 2026-11)"
+    },
+    {
+      "do": "wait_change",
+      "timeout": 4
+    }
+  ],
+  "platforms": [
+    "ios"
+  ]
+}

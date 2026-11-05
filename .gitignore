@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.DS_Store
+.env
+# built on each Mac by setup.sh
+bin/ocr
+bin/PhoneAgentContacts.app/
+# never commit captures or logs from a phone
+*.png
+*.jpg
+*.log

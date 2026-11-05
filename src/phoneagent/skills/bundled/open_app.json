@@ -1,0 +1,23 @@
+{
+  "name": "open_app",
+  "description": "Open an installed app by its name (for example Settings or WhatsApp).",
+  "params": {
+    "name": {
+      "description": "App name as shown on the Home Screen"
+    }
+  },
+  "steps": [
+    {
+      "do": "launch_app",
+      "name": "{name}"
+    },
+    {
+      "do": "wait_change",
+      "timeout": 3
+    }
+  ],
+  "platforms": [
+    "ios",
+    "android"
+  ]
+}

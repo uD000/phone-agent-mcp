@@ -1,0 +1,6 @@
+#!/bin/sh
+# Emergency stop for phone-agent: all phone input is refused until pa-resume.
+D="${PHONE_AGENT_HOME:-$HOME/.phone-agent}"
+mkdir -p "$D" && chmod 700 "$D" && : > "$D/KILL" && chmod 600 "$D/KILL"
+osascript -e 'display notification "All phone input is stopped. Run pa-resume to continue." with title "phone-agent"' >/dev/null 2>&1
+echo "phone-agent stopped (kill switch on). Run pa-resume to continue."

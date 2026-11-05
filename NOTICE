@@ -1,0 +1,13 @@
+phone-agent-mcp
+Copyright (C) 2026 UdayHelps and contributors. Licensed under the GNU General Public License v3.0 or later (see LICENSE).
+
+Third-party software
+--------------------
+* open-iphone-use (https://github.com/semsturgut/open-iphone-use), Apache License 2.0 (licenses/Apache-2.0.txt).
+  Portions of src/phoneagent/keys.py (key and chord tables) and src/phoneagent/session.py (the structure of the CoreDevice
+  display-stream and HID connection) are adapted from it. Changes were made.
+* pymobiledevice3 (https://github.com/doronz88/pymobiledevice3), GPL-3.0-or-later. Used as a library: this is why the whole
+  project is GPL-3.0-or-later. Not bundled; installed from PyPI by setup.sh.
+* MCP Python SDK (https://github.com/modelcontextprotocol/python-sdk), MIT. Pillow, HPND-style license. Both installed from PyPI.
+
+Not affiliated with or endorsed by Apple, Google, Meta/WhatsApp or Anthropic. Product names belong to their owners.

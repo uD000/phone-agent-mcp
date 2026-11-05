@@ -32,9 +32,9 @@ def rpc(method, params=None, notify=False):
     return None if notify else json.loads(server.stdout.readline())
 
 
-def tool(name, **arguments):
+def tool(tool_name, **arguments):
     started = time.time()
-    result = rpc('tools/call', dict(name=name, arguments=arguments))['result']
+    result = rpc('tools/call', dict(name=tool_name, arguments=arguments))['result']
     text = ' '.join(p.get('text', '') for p in result['content'] if p['type'] == 'text')
     images = sum(1 for p in result['content'] if p['type'] == 'image')
     return text, images, time.time() - started, bool(result.get('isError'))
@@ -69,7 +69,10 @@ check('device_info', 'ios' in text, text[:90])
 text, _, took, _ = tool('read_screen_text', device=name)
 check('read_screen_text (OCR helper)', text.startswith('['), 'built with setup.sh' if not text.startswith('[') else '%d texts, %.1fs' % (len(json.loads(text)), took))
 text, images, took, _ = tool('press_button', name='home', device=name)
-check('press_button home', images == 1, '%.1fs' % took)
+if 'kill switch' in text:
+    print('  skip  press_button home  (the kill switch is ON: run bin/pa-resume to clear it; this refusal is correct behavior)')
+else:
+    check('press_button home', images == 1, '%.1fs' % took)
 tool('disconnect', device=name)
 server.terminate()
 print('\n%s' % ('All live checks passed.' if not failed else 'FAILED: ' + ', '.join(failed)))

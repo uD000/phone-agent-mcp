@@ -38,7 +38,7 @@ Android TV has no touch: the agent navigates with `press_key` (up, down, left, r
 ## Install
 
 ```bash
-git clone https://github.com/UdayHelps/phone-agent-mcp.git
+git clone https://github.com/uD000/phone-agent-mcp.git
 cd phone-agent-mcp
 ./setup.sh                       # venv, dependencies, helpers, then a health check
 ```
